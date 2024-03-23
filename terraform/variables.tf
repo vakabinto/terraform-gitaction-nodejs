@@ -1,4 +1,4 @@
-## Generic variables
+# Generic variables
 variable "region" {
   description = "Region code"
   type        = string
@@ -453,3 +453,5 @@ variable "rds_db_subnet_group_tags" {
   type        = map(string)
   default     = { "Name" = "demo-rds", "created-by" = "terraform" }
 }
+
+## leave here
