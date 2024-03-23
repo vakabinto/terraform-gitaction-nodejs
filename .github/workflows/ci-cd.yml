@@ -1,0 +1,66 @@
+name: Node.js and Terraform CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - terraform/**
+
+env:
+    region: us-east-1
+    BUCKET_TF_STATE: ${{ secrets.BUCKET_TF_STATE}}
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4.0.2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      run: npm test
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{env.region}}
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: '1.0.0'  # Specify the version of Terraform you want to use
+
+    - name: Terraform Init
+      run: terraform init backend-config="bucket=$BUCKET_TF_STATE"
+
+    - name: Terraform format
+      id: fmt
+      run: terraform fmt -check
+
+
+    - name: Terraform Validate
+      run: terraform validate
+
+    - name: Terraform Plan
+      run: terraform plan -no-color -input=false -out planfile
+      continue-on-error: true
+
+    - name: Terraform plan status
+      if: steps.plan.outcome == 'failure'
+      run: exit 1
+
+    - name: Terraform Apply
+      run: terraform apply --auto-approve -input=false -parallelism=1 planfile
