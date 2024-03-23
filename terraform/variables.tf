@@ -1,4 +1,4 @@
-# Generic variables
+## Generic variables
 variable "region" {
   description = "Region code"
   type        = string
