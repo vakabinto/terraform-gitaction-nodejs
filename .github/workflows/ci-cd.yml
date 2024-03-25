@@ -41,10 +41,10 @@ jobs:
   terraform:
     runs-on: ubuntu-latest
     defaults:
-    run:
-      shell: bash
-      working-directory: ./terraform
-      
+      run:
+       shell: bash
+       working-directory: ./terraform
+
     steps:
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v3
