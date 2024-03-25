@@ -41,7 +41,7 @@ jobs:
     defaults:
       run:
        shell: bash
-       working-directory: terraform
+       working-directory: C:\Users\USER\GIT-IAC-NODE\terraform-gitaction-nodejs\terraform
 
     steps:
     - name: Set up Terraform
