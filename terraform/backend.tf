@@ -7,5 +7,4 @@ terraform {
         dynamodb_table = "test"
     }
 }
-##jes
-##
+
