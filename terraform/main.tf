@@ -6,7 +6,8 @@ terraform {
     }
   }
 }
+
 provider "aws" {
-    ##configuration options
-    region = "us-east-1"
+  region = "us-east-1"
+  # Other configuration options can be added here if needed
 }
