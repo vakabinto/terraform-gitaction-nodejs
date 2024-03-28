@@ -1,18 +1,4 @@
-locals {
-  user_data = <<-EOT
-#!/bin/bash
-yum update -y
-curl -sL https://rpm.nodesource.com/setup_14.x | bash -
-yum install -y nodejs
 
-# Download and deploy your Node.js application
-cd /home/ubuntu
-git clone https://github.com/rat9615/simple-nodejs-app
-cd simple-nodejs-app
-npm install
-npm start
-  EOT
-}
 ################################################################################
 # Supporting Resources
 ################################################################################
