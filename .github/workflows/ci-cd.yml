@@ -10,7 +10,7 @@ on:
 env:
     region: us-east-1
     BUCKET_TF_STATE: ${{ secrets.BUCKET_TF_STATE}}
-    working-directory: .terraform/
+    working-directory: ./terraform/
 
 jobs:
   build:
