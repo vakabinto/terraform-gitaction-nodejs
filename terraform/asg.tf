@@ -41,7 +41,7 @@ module "asg" {
   health_check_type         = var.asg_health_check_type
   vpc_zone_identifier       = module.vpc.private_subnets
   target_group_arns         = module.alb.target_group_arns
-  user_data                 = base64encode(local.user_data)
+  #user_data                 = base64encode(local.user_data)
 
   # Launch template
   launch_template_name        = var.asg_launch_template_name
