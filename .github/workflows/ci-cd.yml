@@ -4,6 +4,8 @@ on: workflow_dispatch
 env:
   region: us-east-1
   BUCKET_TF_STATE: ${{ secrets.BUCKET_TF_STATE }}
+  AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+  AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
 
 jobs:
   build:
@@ -28,6 +30,8 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-region: ${{ env.region }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   terraform:
     runs-on: ubuntu-latest
