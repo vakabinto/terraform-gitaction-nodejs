@@ -1,13 +1,6 @@
 name: Node.js and Terraform CI
 
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - terraform/**
-  workflow_dispatch
-
+on: workflow_dispatch
 env:
   region: us-east-1
   BUCKET_TF_STATE: ${{ secrets.BUCKET_TF_STATE }}
