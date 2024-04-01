@@ -6,17 +6,14 @@ on:
       - main
     paths:
       - terraform/**
+  workflow_dispatch
 
 env:
-    region: us-east-1
-    BUCKET_TF_STATE: ${{ secrets.BUCKET_TF_STATE}}
-    working-directory: ./terraform
-    AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
-    AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+  region: us-east-1
+  BUCKET_TF_STATE: ${{ secrets.BUCKET_TF_STATE }}
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -37,15 +34,10 @@ jobs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.region}}
+        aws-region: ${{ env.region }}
 
   terraform:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-       working-directory: ${{env.working-directory}}
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -54,12 +46,11 @@ jobs:
       uses: hashicorp/setup-terraform@v3
 
     - name: Terraform Init
-      run: terraform init -backend-config="bucket=$BUCKET_TF_STATE"
+      run: terraform init -backend-config="bucket=${{ secrets.BUCKET_TF_STATE }}"
 
     - name: Terraform format
       id: fmt
       run: terraform fmt -check
-
 
     - name: Terraform Validate
       run: terraform validate
