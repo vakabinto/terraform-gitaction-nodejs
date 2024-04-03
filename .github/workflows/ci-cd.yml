@@ -58,7 +58,7 @@ jobs:
       run: terraform validate
 
     - name: Terraform Plan
-      run: terraform plan -no-color -input=false -out deploy.tfplan
+      run: terraform plan -no-color -input=false -out planfile
       continue-on-error: true
 
     - name: Terraform plan status
@@ -66,4 +66,4 @@ jobs:
       run: exit 1
 
     - name: Terraform Apply
-      run: terraform apply -auto-approve -input=false -parallelism=1 deploy.tfplan
+      run: terraform apply -auto-approve -input=false -parallelism=1 planfile
